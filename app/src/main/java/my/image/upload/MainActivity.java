@@ -12,6 +12,7 @@ import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -100,8 +101,12 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<MyResponse>() {
             @Override
             public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                if (!response.body().message.isEmpty()) {
+                Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                Log.d("API Response",response.toString());
+              if (!response.body().message.isEmpty()) {
+              //  if (!response.body().message.equalsIgnoreCase("File uploaded successfully")) {
                     Toast.makeText(getApplicationContext(), "File Uploaded Successfully...", Toast.LENGTH_LONG).show();
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Some error occurred...", Toast.LENGTH_LONG).show();
                 }
@@ -110,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<MyResponse> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.d("API ErrrResponse",t.getMessage());
             }
         });
     }
